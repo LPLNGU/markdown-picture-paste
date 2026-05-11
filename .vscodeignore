@@ -5,3 +5,4 @@ src/
 tsconfig.json
 .gitattributes
 *.ts
+gen_icon.ps1

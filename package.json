@@ -3,7 +3,7 @@
   "displayName": "Markdown Picture Paste",
   "description": "在 Markdown 文档中粘贴图片，自动存入同名隐藏文件夹，并自动清理未引用的图片",
   "version": "1.0.0",
-  "publisher": "markdown-picture-paste",
+  "publisher": "LPLNGU",
   "repository": {
     "type": "git",
     "url": "https://github.com/LPLNGU/markdown-picture-paste"
@@ -13,6 +13,7 @@
   },
   "homepage": "https://github.com/LPLNGU/markdown-picture-paste#readme",
   "license": "MIT",
+  "icon": "icon.png",
   "galleryBanner": {
     "color": "#1e1e1e",
     "theme": "dark"
