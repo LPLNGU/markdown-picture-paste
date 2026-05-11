@@ -1,0 +1,9 @@
+{
+    "command.paste": "Paste Image into Markdown",
+    "command.cleanup": "Clean Up Unreferenced Images",
+    "config.title": "Markdown Picture Paste",
+    "config.imageFormat": "Format of pasted image",
+    "config.imagePrefix": "Prefix for image file name",
+    "config.enableAutoCleanup": "Enable auto cleanup of unreferenced images",
+    "config.showCleanupNotification": "Show notification when cleaning up images"
+}

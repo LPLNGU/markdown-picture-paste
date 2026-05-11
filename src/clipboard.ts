@@ -3,11 +3,8 @@ import * as path from 'path';
 import * as fs from 'fs';
 import * as os from 'os';
 import { execSync } from 'child_process';
+import { t } from './localize';
 
-/**
- * 从剪贴板保存图片到指定路径
- * 支持 Windows (PowerShell) 和 macOS (osascript) 两种方式
- */
 export async function saveClipboardImage(imagePath: string, imageFormat: string = 'png'): Promise<boolean> {
     const platform = process.platform;
 
@@ -17,19 +14,16 @@ export async function saveClipboardImage(imagePath: string, imageFormat: string 
         } else if (platform === 'darwin') {
             return await saveClipboardImageMac(imagePath, imageFormat);
         } else {
-            vscode.window.showErrorMessage('不支持的操作系统，仅支持 Windows 和 macOS');
+            vscode.window.showErrorMessage(t('unsupported_platform'));
             return false;
         }
     } catch (error) {
         const errMsg = error instanceof Error ? error.message : String(error);
-        vscode.window.showErrorMessage(`保存剪贴板图片失败: ${errMsg}`);
+        vscode.window.showErrorMessage(t('save_clipboard_failed') + errMsg);
         return false;
     }
 }
 
-/**
- * Windows 下使用 PowerShell 从剪贴板获取图片并保存
- */
 async function saveClipboardImageWindows(imagePath: string, imageFormat: string = 'png'): Promise<boolean> {
     const psScript = `
 param($path, $formatName)
@@ -67,45 +61,40 @@ if ($img) {
         try { fs.unlinkSync(tempScript); } catch { /* ignore */ }
 
         if (result === 'none') {
-            vscode.window.showWarningMessage('剪贴板中没有图片，请先复制一张图片');
+            vscode.window.showWarningMessage(t('no_image_copy_first'));
             return false;
         }
 
         if (result !== 'ok') {
-            vscode.window.showWarningMessage(`保存图片失败: PowerShell 返回异常结果 "${result}"`);
+            vscode.window.showWarningMessage(t('save_failed_powershell') + `"${result}"`);
             return false;
         }
 
         if (!fs.existsSync(imagePath)) {
-            vscode.window.showWarningMessage('保存图片失败: 文件未生成');
+            vscode.window.showWarningMessage(t('save_failed_no_file'));
             return false;
         }
 
         return true;
     } catch (error) {
         const errMsg = error instanceof Error ? error.message : String(error);
-        vscode.window.showErrorMessage(`从剪贴板读取图片失败: ${errMsg}`);
+        vscode.window.showErrorMessage(t('read_clipboard_failed') + errMsg);
         return false;
     }
 }
 
-/**
- * macOS 下使用 osascript 从剪贴板获取图片并保存
- */
 async function saveClipboardImageMac(imagePath: string, imageFormat: string = 'png'): Promise<boolean> {
     try {
-        // 先检查剪贴板是否有图片
         const checkResult = execSync(`osascript -e 'clipboard info'`, {
             encoding: 'utf-8',
             timeout: 5000
         });
 
         if (!checkResult.includes('class PNGf') && !checkResult.includes('class JPEG')) {
-            vscode.window.showWarningMessage('剪贴板中没有图片');
+            vscode.window.showWarningMessage(t('no_image_in_clipboard'));
             return false;
         }
 
-        // 使用 sips 工具将剪贴板图片保存为文件
         const osaImageFormat = imageFormat === 'png' ? 'PNG' : 'JPEG';
         execSync(`osascript -e 'set theImage to (the clipboard as picture)' -e 'set imagePath to "${imagePath}"' -e 'set fileRef to open for access imagePath with write permission' -e 'write (theImage as ${osaImageFormat} picture) to fileRef' -e 'close access fileRef'`, {
             encoding: 'utf-8',
@@ -114,7 +103,6 @@ async function saveClipboardImageMac(imagePath: string, imageFormat: string = 'p
 
         return fs.existsSync(imagePath);
     } catch (error) {
-        // 备用方案：使用 pngpaste 工具（需安装）
         try {
             if (imageFormat === 'png') {
                 execSync(`pngpaste "${imagePath}"`, {
@@ -130,15 +118,12 @@ async function saveClipboardImageMac(imagePath: string, imageFormat: string = 'p
             return fs.existsSync(imagePath);
         } catch {
             const errMsg = error instanceof Error ? error.message : String(error);
-            vscode.window.showErrorMessage(`从剪贴板读取图片失败: ${errMsg}\n提示：可安装 pngpaste (brew install pngpaste)`);
+            vscode.window.showErrorMessage(t('read_clipboard_failed') + errMsg + t('install_pngpaste'));
             return false;
         }
     }
 }
 
-/**
- * 检查剪贴板是否包含图片
- */
 export async function hasClipboardImage(): Promise<boolean> {
     const platform = process.platform;
     console.log('[md-paste:clipboard] hasClipboardImage', { platform });
@@ -153,9 +138,9 @@ export async function hasClipboardImage(): Promise<boolean> {
             const tempScript = path.join(tempDir, '_check_clipboard.ps1');
             fs.writeFileSync(tempScript, `param()\n${checkScript}`, 'utf-8');
             const cmd = `powershell -NoProfile -ExecutionPolicy Bypass -File "${tempScript}"`;
-            console.log('[md-paste:clipboard] 执行命令', { cmd });
+            console.log('[md-paste:clipboard] exec', { cmd });
             const result = execSync(cmd, { encoding: 'utf-8', timeout: 10000 }).trim();
-            console.log('[md-paste:clipboard] 检查结果', { result });
+            console.log('[md-paste:clipboard] result', { result });
             try { fs.unlinkSync(tempScript); } catch { /* ignore */ }
             return result === 'true';
         } else if (platform === 'darwin') {
@@ -166,7 +151,7 @@ export async function hasClipboardImage(): Promise<boolean> {
             return result.includes('class PNGf') || result.includes('class JPEG');
         }
     } catch (err) {
-        console.error('[md-paste:clipboard] 检查剪贴板失败，假设有图片', err);
+        console.error('[md-paste:clipboard] check failed, assume image', err);
         return true;
     }
 

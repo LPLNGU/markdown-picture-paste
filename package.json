@@ -2,7 +2,7 @@
   "name": "markdown-picture-paste",
   "displayName": "Markdown Picture Paste",
   "description": "在 Markdown 文档中粘贴图片，自动存入同名隐藏文件夹，并自动清理未引用的图片",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "publisher": "LPLNGU",
   "repository": {
     "type": "git",
@@ -41,11 +41,11 @@
     "commands": [
       {
         "command": "markdown-picture-paste.paste",
-        "title": "粘贴图片到 Markdown"
+        "title": "%command.paste%"
       },
       {
         "command": "markdown-picture-paste.cleanup",
-        "title": "清理未引用的图片"
+        "title": "%command.cleanup%"
       }
     ],
     "keybindings": [
@@ -57,28 +57,28 @@
       }
     ],
     "configuration": {
-      "title": "Markdown Picture Paste",
+      "title": "%config.title%",
       "properties": {
         "markdown-picture-paste.imageFormat": {
           "type": "string",
           "default": "png",
           "enum": ["png", "jpg", "jpeg", "gif", "webp"],
-          "description": "粘贴图片的格式"
+          "description": "%config.imageFormat%"
         },
         "markdown-picture-paste.imagePrefix": {
           "type": "string",
           "default": "img_",
-          "description": "图片文件名前缀"
+          "description": "%config.imagePrefix%"
         },
         "markdown-picture-paste.enableAutoCleanup": {
           "type": "boolean",
           "default": true,
-          "description": "启用自动清理未引用的图片"
+          "description": "%config.enableAutoCleanup%"
         },
         "markdown-picture-paste.showCleanupNotification": {
           "type": "boolean",
           "default": true,
-          "description": "清理图片时显示通知"
+          "description": "%config.showCleanupNotification%"
         }
       }
     }

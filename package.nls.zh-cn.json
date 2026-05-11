@@ -1,0 +1,9 @@
+{
+    "command.paste": "粘贴图片到 Markdown",
+    "command.cleanup": "清理未引用的图片",
+    "config.title": "Markdown Picture Paste",
+    "config.imageFormat": "粘贴图片的格式",
+    "config.imagePrefix": "图片文件名前缀",
+    "config.enableAutoCleanup": "启用自动清理未引用的图片",
+    "config.showCleanupNotification": "清理图片时显示通知"
+}
