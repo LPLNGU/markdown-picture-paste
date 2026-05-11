@@ -1,0 +1,17 @@
+# Node
+node_modules/
+out/
+*.vsix
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/settings.json
+*.swp
+*.swo
+
+# Build
+dist/
+*.tsbuildinfo

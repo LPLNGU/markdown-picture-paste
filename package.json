@@ -1,0 +1,100 @@
+{
+  "name": "markdown-picture-paste",
+  "displayName": "Markdown Picture Paste",
+  "description": "在 Markdown 文档中粘贴图片，自动存入同名隐藏文件夹，并自动清理未引用的图片",
+  "version": "1.0.0",
+  "publisher": "markdown-picture-paste",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/markdown-picture-paste"
+  },
+  "bugs": {
+    "url": "https://github.com/your-username/markdown-picture-paste/issues"
+  },
+  "homepage": "https://github.com/your-username/markdown-picture-paste#readme",
+  "license": "MIT",
+  "icon": "icon.png",
+  "galleryBanner": {
+    "color": "#1e1e1e",
+    "theme": "dark"
+  },
+  "keywords": [
+    "markdown",
+    "image",
+    "paste",
+    "picture",
+    "clipboard",
+    "图片",
+    "粘贴"
+  ],
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onLanguage:markdown"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "markdown-picture-paste.paste",
+        "title": "粘贴图片到 Markdown"
+      },
+      {
+        "command": "markdown-picture-paste.cleanup",
+        "title": "清理未引用的图片"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "markdown-picture-paste.paste",
+        "key": "ctrl+alt+v",
+        "mac": "cmd+alt+v",
+        "when": "editorLangId == markdown"
+      }
+    ],
+    "configuration": {
+      "title": "Markdown Picture Paste",
+      "properties": {
+        "markdown-picture-paste.imageFormat": {
+          "type": "string",
+          "default": "png",
+          "enum": ["png", "jpg", "jpeg", "gif", "webp"],
+          "description": "粘贴图片的格式"
+        },
+        "markdown-picture-paste.imagePrefix": {
+          "type": "string",
+          "default": "img_",
+          "description": "图片文件名前缀"
+        },
+        "markdown-picture-paste.enableAutoCleanup": {
+          "type": "boolean",
+          "default": true,
+          "description": "启用自动清理未引用的图片"
+        },
+        "markdown-picture-paste.showCleanupNotification": {
+          "type": "boolean",
+          "default": true,
+          "description": "清理图片时显示通知"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint src --ext ts"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.85.0",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.3.0",
+    "eslint": "^8.50.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0"
+  }
+}
