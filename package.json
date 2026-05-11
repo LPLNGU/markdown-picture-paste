@@ -6,14 +6,13 @@
   "publisher": "markdown-picture-paste",
   "repository": {
     "type": "git",
-    "url": "https://github.com/your-username/markdown-picture-paste"
+    "url": "https://github.com/LPLNGU/markdown-picture-paste"
   },
   "bugs": {
-    "url": "https://github.com/your-username/markdown-picture-paste/issues"
+    "url": "https://github.com/LPLNGU/markdown-picture-paste/issues"
   },
-  "homepage": "https://github.com/your-username/markdown-picture-paste#readme",
+  "homepage": "https://github.com/LPLNGU/markdown-picture-paste#readme",
   "license": "MIT",
-  "icon": "icon.png",
   "galleryBanner": {
     "color": "#1e1e1e",
     "theme": "dark"

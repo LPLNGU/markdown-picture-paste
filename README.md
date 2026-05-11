@@ -35,13 +35,13 @@
 > 即将上架...
 
 #### 方式二：手动安装
-1. 下载最新的 `.vsix` 文件从 [Releases](https://github.com/your-username/markdown-picture-paste/releases)
+1. 下载最新的 `.vsix` 文件从 [Releases](https://github.com/LPLNGU/markdown-picture-paste/releases)
 2. 在 VS Code 中按 `Ctrl+Shift+P` → `Extensions: Install from VSIX...`
 
 #### 方式三：源码运行
 ```bash
 # 克隆仓库
-git clone https://github.com/your-username/markdown-picture-paste.git
+git clone https://github.com/LPLNGU/markdown-picture-paste.git
 cd markdown-picture-paste
 
 # 安装依赖
